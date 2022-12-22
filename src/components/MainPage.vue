@@ -54,53 +54,12 @@
             <v-row>
               <v-col
                 cols="12"
-                sm="6"
-                md="4"
+                
               >
                 <v-text-field
-                  v-model="name"
+                  v-model="task"
                   :rules="nameRules"
-                  label="Name*"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                v-model="aname"
-                  :rules="anameRules"
-                  label="Assignee name*"
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                v-model="date"
-                  :rules="dateRules"
-                  label="Due date*"
-                  hint="Format: dd/mm/yy"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                v-model="email"
-                  :rules="emailRules"
-                  label="Email*"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                v-model="sum"
-                  :rules="sumRules"
-                  label="Summary*"
+                  label="Title*"
                   required
                 ></v-text-field>
               </v-col>
@@ -113,6 +72,41 @@
                 ></v-text-field>
               </v-col>
               
+              
+              
+              <v-col
+                cols="12"
+                sm="6"
+                md="6"
+              >
+                <v-text-field
+                v-model="aname"
+                  :rules="anameRules"
+                  label="Assignee name*"
+                ></v-text-field>
+              </v-col>
+              <v-col
+                cols="12"
+                sm="6"
+                md="6"
+              >
+                <v-text-field
+                v-model="date"
+                  :rules="dateRules"
+                  label="Due date*"
+                  hint="Format: dd/mm/yyyy"
+                  required
+                ></v-text-field>
+              </v-col>
+
+              <v-col cols="12">
+                <v-text-field
+                v-model="email"
+                  :rules="emailRules"
+                  label="Email*"
+                  required
+                ></v-text-field>
+              </v-col>
               
             </v-row>
           </v-container>
@@ -131,7 +125,7 @@
           
             color="blue darken-1"
             text
-            @click="dialog = false"
+            @click="submitTask"
           >
             Save
           </v-btn>
@@ -146,43 +140,24 @@
 
       <!-- <v-card-text>Hello</v-card-text> -->
 
-
-    <!-- Inner Card 2 -->
-
-    <!-- <v-row> <v-col 
-        md="6"> -->
-            <v-card
-            class="box3 my-12" 
-            width="96%"
-            height="300px"
-            color="#ffffff4d"
-            >
-
-            <v-card-title>Task List</v-card-title>
-
-            <!-- <ul class="task-list">
-                <li class="task-list-item">
-                  <label class="task-list-item-label">
-                    <input type="checkbox">
-                    <span>Task</span>
-                  </label>
-                  <span class="delete-btn" title="Delete Task"></span>
-                </li>
-             </ul> -->
-
-             <table class="table table-striped">
+      <table class="table table-striped">
                 <thead>
+                    <v-row>
+                    
                     <tr>
-                    <th scope="col">Task</th>
-                    <th scope="col">Status</th>
-                    <th scope="col" class="text-center">#</th>
-                    <th scope="col" class="text-center">#</th>
+                    <th scope="col"><v-col   >Task</v-col></th>
+                    <th scope="col"><v-col  pl="10">Status</v-col></th>
+                    <th scope="col"><v-col >Due Date</v-col></th>
+                    <th scope="col" class="text-center"><v-col >#</v-col></th>
+                    <th scope="col" class="text-center"><v-col >#</v-col></th>
                     </tr>
+                </v-row>
                 </thead>
                 <tbody>
                     <tr v-for="(task, index) in tasks" :key="index">
                     <th>{{ task.name }}</th>
                     <td>{{ task.status }}</td>
+                    <td>{{ task.ddate }}</td>
                     <td>
                         <div class="text-center">
                             <span class="fa fa-pen"></span>
@@ -196,15 +171,69 @@
                     </tr>
                 </tbody>
                 </table>
-      
-        
-          
-          
-        
 
 
-    
+    <!-- Inner Card 2 -->
+
+    <!-- <v-row> <v-col 
+        md="6"> -->
+        
+        
+            <v-card
+            class="box3 my-12" 
+            max-width="96%"
+            height="300px"
+            color="#ffffff4d"
+            >
+            
+
+            <v-card-title>Task List</v-card-title>
+
+            <!-- <ul class="task-list">
+                <li class="task-list-item">
+                  <label class="task-list-item-label">
+                    <input type="checkbox">
+                    <span>Task</span>
+                  </label>
+                  <span class="delete-btn" title="Delete Task"></span>
+                </li>
+             </ul> -->
+
+
+             
+             <table class="table table-striped">
+                <thead>
+                    
+                    <tr>
+                    <th scope="col">Task</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Due Date</th>
+                    <th scope="col" class="text-center">#</th>
+                    <th scope="col" class="text-center">#</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(task, index) in tasks" :key="index">
+                    <th>{{ task.name }}</th>
+                    <td>{{ task.status }}</td>
+                    <td>{{ task.ddate }}</td>
+                    <td>
+                        <div class="text-center">
+                            <span class="fa fa-pen"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="text-center" @click="deleteTask(index)">
+                            <span class="fa fa-trash"></span>
+                        </div>
+                    </td>
+                    </tr>
+                </tbody>
+                </table>
+
             </v-card>
+            
+        
 <!-- </v-col> -->
 
         
@@ -246,10 +275,10 @@ export default {
             dialog: false,
 
             // Form Validations
-                name: '',
+                task: '',
             nameRules: [
-                v => !!v || 'Name is required',
-                v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+                v => !!v || 'Title is required',
+                v => (v && v.length <= 40) || 'Title must be less than 40 characters',
             ],
 
             aname: '',
@@ -261,7 +290,7 @@ export default {
             date: '',
             dateRules: [
                 v => !!v || 'Due date is required',
-                v => (v && v.length <= 10) || 'Date must be in the Format dd/mm/yyyy',
+                v => /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/.test(v) || 'Date must be in the Format dd/mm/yyyy',
             ],
 
             email: '',
@@ -270,11 +299,11 @@ export default {
                 v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
             ],
 
-            sum: '',
-            sumRules: [
-                v => !!v || 'Summary is required',
-                // v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-            ],
+            // sum: '',
+            // sumRules: [
+            //     v => !!v || 'Summary is required',
+            //     // v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+            // ],
 
             des: '',
             desRules: [
@@ -285,16 +314,18 @@ export default {
             
             
 
+
             //TaskList
-            task: '',
             tasks: [
                 {
                    name: 'Steal bananas from the store.',
-                   status: 'to-do'
+                   status: 'to-do',
+                   ddate: '12/12/2022'
                 },
                 {
                     name: 'Eat 1kg chocolate in 1 hour.',
-                    status: 'in-progress'
+                    status: 'in-progress',
+                    ddate: '12/11/2022'
                 }
             ]
         }
@@ -302,29 +333,24 @@ export default {
 
     methods: {
         submitTask(){
-            console.log('Hello submit task')
+            console.log(this.task)
+            if(this.task.length === 0) return
+            if(this.date.length === 0) return;
+            
+            this.tasks.push({
+                name: this.task,
+                status: 'to-do',
+                ddate: this.date
+            });
+
+        },
+
+        deleteTask(index){
+            this.tasks.splice(index, 1);
         }
     }
 
 
-    // el: '#tasklist',
-    // data: {
-    //     title: 'to do list'
-    //     tasks: [
-    //         {name: 'Today : Internal Meeting'}
-    //         {name: 'Tomorrow : Read a book'}
-    //         {name: 'Daily : Event Joins'}
-    //     ]
-    // },
-
-    // methods: {
-    //     newItem: function() {
-    //         if (!this.tasks.name){
-    //             retuen
-    //         }
-    //         this
-    //     }
-    // }
 }
 </script>
 
