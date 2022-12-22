@@ -35,7 +35,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
-        class="btt"
+         class="btt"
           color="primary"
           dark
           v-bind="attrs"
@@ -140,37 +140,7 @@
 
       <!-- <v-card-text>Hello</v-card-text> -->
 
-      <table class="table table-striped">
-                <thead>
-                    <v-row>
-                    
-                    <tr>
-                    <th scope="col"><v-col   >Task</v-col></th>
-                    <th scope="col"><v-col  pl="10">Status</v-col></th>
-                    <th scope="col"><v-col >Due Date</v-col></th>
-                    <th scope="col" class="text-center"><v-col >#</v-col></th>
-                    <th scope="col" class="text-center"><v-col >#</v-col></th>
-                    </tr>
-                </v-row>
-                </thead>
-                <tbody>
-                    <tr v-for="(task, index) in tasks" :key="index">
-                    <th>{{ task.name }}</th>
-                    <td>{{ task.status }}</td>
-                    <td>{{ task.ddate }}</td>
-                    <td>
-                        <div class="text-center">
-                            <span class="fa fa-pen"></span>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="text-center">
-                            <span class="fa fa-trash"></span>
-                        </div>
-                    </td>
-                    </tr>
-                </tbody>
-                </table>
+      
 
 
     <!-- Inner Card 2 -->
@@ -201,55 +171,40 @@
 
 
              
-             <table class="table table-striped">
-                <thead>
-                    
-                    <tr>
-                    <th scope="col">Task</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Due Date</th>
-                    <th scope="col" class="text-center">#</th>
-                    <th scope="col" class="text-center">#</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(task, index) in tasks" :key="index">
-                    <th>{{ task.name }}</th>
-                    <td>{{ task.status }}</td>
-                    <td>{{ task.ddate }}</td>
-                    <td>
-                        <div class="text-center">
-                            <span class="fa fa-pen"></span>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="text-center" @click="deleteTask(index)">
-                            <span class="fa fa-trash"></span>
-                        </div>
-                    </td>
-                    </tr>
-                </tbody>
-                </table>
+             <v-table
+             class="table"
+    
+            height="300px"
+        >
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th >Status</th>
+                <th scope="col">Due Date</th>
+                            <th scope="col" class="text-center">Edit</th>
+                            <th scope="col" class="text-center">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+                            <tr v-for="(task, index) in tasks" :key="index">
+                            <th>{{ task.name }}</th>
+                            <td>{{ task.status }}</td>
+                            <td>{{ task.ddate }}</td>
+                            <td>
+                                <div class="text-center">
+                                    <span class="fa fa-pen"></span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="text-center" @click="deleteTask(index)">
+                                    <span class="fa fa-trash"></span>
+                                </div>
+                            </td>
+                            </tr>
+                        </tbody>
+        </v-table>
 
             </v-card>
-            
-        
-<!-- </v-col> -->
-
-        
-         <!-- Inner Card 3
-    <v-col 
-        md="6">
-      <v-card 
-      class="box2 my-12"
-      width="90%"
-      height="300px"
-      color="#ffffff4d"
-    >
-    <v-card-title>Done</v-card-title>
-        </v-card>
-    </v-col>
-    </v-row> -->
     
     </v-card>
 
@@ -356,6 +311,10 @@ export default {
 
 <style>
 
+.table {
+    background: transparent;
+}
+
 .btt {
     margin-right: 20px;
     margin-top: 15px;
@@ -375,6 +334,7 @@ export default {
 
 .box3 {
     margin-left: 20px;
+    margin-right: 20px;
     
 }
 
