@@ -381,6 +381,9 @@ export default {
 
             task: '',
             date: '',
+            aname: '',
+            email: '',
+            des: '',
             editedTask: null,
             statuses: ["to-do", "in-progress", "finished"],
 
@@ -417,6 +420,9 @@ export default {
 
             this.task = '';
             this.date = '';
+            this.email = '';
+            this.aname = '';
+            this.des = '';
             
         },
 
@@ -441,6 +447,7 @@ export default {
 
             this.task = '';
             this.date = '';
+
         },
 
         deleteTask(index){
@@ -472,7 +479,8 @@ export default {
 
 .finished {
     text-decoration: line-through;
-    text-decoration-thickness: 2px;
+    /* text-decoration-thickness: 2px; */
+    color: green;
 }
 
 .pointer {
