@@ -325,13 +325,13 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
+          <!-- <v-btn
             color="blue darken-1"
             text
             @click="dialog1 = false"
           >
             Close
-          </v-btn>
+          </v-btn> -->
           <div @click="dialog1 = false">
           <v-btn
           :disabled="!valid"
