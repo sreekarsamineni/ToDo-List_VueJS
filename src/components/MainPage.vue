@@ -125,7 +125,7 @@
           >
             Close
           </v-btn>
-          <!-- <div @click="dialog = false"> -->
+          <div @click="dialog = false">
             <div @click="validate">
             
           <v-btn
@@ -137,7 +137,7 @@
             Save
           </v-btn>
          </div>
-        <!-- </div> -->
+        </div>
         </v-card-actions>
       </v-card>
     </v-dialog>
