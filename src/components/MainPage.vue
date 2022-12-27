@@ -28,11 +28,13 @@
 
      <!-- Create Dialog Box             -->
                 <v-row justify="center">
+                  <v-form>
     <v-dialog
       v-model="dialog"
       persistent
       max-width="600px"
     >
+  
       <template v-slot:activator="{ on, attrs }">
         <v-btn
          class="btt"
@@ -123,18 +125,23 @@
           >
             Close
           </v-btn>
-          <div @click="dialog = false">
+          <!-- <div @click="dialog = false"> -->
+            <div @click="validate">
+            
           <v-btn
-            color="blue darken-1"
+          
             text
+            color="blue darken-1"
             @click="submitTask"
           >
             Save
           </v-btn>
-        </div>
+         </div>
+        <!-- </div> -->
         </v-card-actions>
       </v-card>
     </v-dialog>
+  </v-form>
   </v-row>
 
             </div>
@@ -191,8 +198,13 @@
             <tbody>
                             <tr v-for="(task, index) in tasks" :key="index">
                             <th>
-                                <span :class="{'finished': task.status === 'finished'}">{{ task.name }}
+                              <div @click="dialog2 = true">
+                                <div @click="editTask(index)">
+                                <span :class="{'finished': task.status === 'finished'}">
+                                  {{ task.name }}
                                 </span>
+                              </div>
+                              </div>
                             </th>
                             <td style="width: 120px">
                                 <span @click="changeStatus(index)" class="pointer">
@@ -213,6 +225,9 @@
                                 </div>
                             </td>
                             </tr>
+                            <td>{{ task.ddes }}</td>
+                            <td>{{ task.asn }}</td>
+                            <td>{{ task.mail }}</td>
                         </tbody>
         </v-table>
 
@@ -322,6 +337,96 @@
     </v-dialog>
   </v-row>
 
+
+  <!-- On-click dialogBox with info -->
+  <v-row justify="center">
+    <v-dialog
+      v-model="dialog2"
+      persistent
+      max-width="600px"
+    >
+      
+      <v-card>
+        <v-card-title>
+          <span class="text-h5">Task Details</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col
+                cols="12"
+                
+              >
+                <v-text-field
+                  v-model="task"
+                  :rules="nameRules"
+                  label="Title*"
+                  readonly
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                v-model="des"
+                  :rules="desRules"
+                  label="Description*"
+                  readonly>
+                </v-text-field>
+              </v-col>
+              <v-col
+                cols="12"
+                sm="6"
+                md="6"
+              >
+                <v-text-field
+                v-model="aname"
+                  :rules="anameRules"
+                  label="Assignee name*"
+                  readonly
+                ></v-text-field>
+              </v-col>
+              <v-col
+                cols="12"
+                sm="6"
+                md="6"
+              >
+                <v-text-field
+                v-model="date"
+                  :rules="dateRules"
+                  label="Due date*"
+                  hint="Format: dd/mm/yyyy"
+                  readonly
+                ></v-text-field>
+              </v-col>
+
+              <v-col cols="12">
+                <v-text-field
+                v-model="email"
+                  :rules="emailRules"
+                  label="Email*"
+                  readonly
+                ></v-text-field>
+              </v-col>
+              
+            </v-row>
+          </v-container>
+          
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="dialog2 = false"
+          >
+            Close
+          </v-btn>
+             
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-row>
+
+
 </template>
 
 <script>
@@ -340,12 +445,13 @@ export default {
             //dialog box
             dialog: false,
             dialog1: false,
+            dialog2: false,
 
             // Form Validations
                 task: '',
             nameRules: [
                 v => !!v || 'Title is required',
-                v => (v && v.length <= 40) || 'Title must be less than 40 characters',
+                v => (v && v.length <= 30) || 'Title must be less than 30 characters',
             ],
 
             aname: '',
@@ -393,29 +499,46 @@ export default {
                 {
                    name: 'Steal bananas from the store.',
                    status: 'to-do',
-                   ddate: '12/12/2022'
+                   ddate: '12/12/2022',
+                   ddes: 'Hello',
+                   asn: 'Sreekar',
+                   mail: 'sr619@gmail.com'
                 },
                 {
                     name: 'Eat 1kg chocolate in 1 hour.',
                     status: 'in-progress',
-                    ddate: '12/11/2022'
+                    ddate: '12/11/2022',
+                    ddes: 'Yooooo',
+                    asn: 'Teja',
+                    mail: 'Teja@gmail.com'
                 }
             ]
         }
     },
 
     methods: {
+      async validate (v) {
+        const { valid } = await this.$refs.dialog.validate()
+
+        if (valid) alert('Form is valid')
+      },
         submitTask(){
             
+          
             console.log(this.task)
+          
             if(this.task.length === 0) return
             if(this.date.length === 0) return;
            
+        
             
                 this.tasks.push({
                     name: this.task,
                     status: 'to-do',
-                    ddate: this.date
+                    ddate: this.date,
+                    ddes: this.des,
+                    asn: this.aname,
+                    mail: this.email
                 });
 
             this.task = '';
@@ -435,18 +558,27 @@ export default {
                 this.tasks.push({
                     name: this.task,
                     status: 'to-do',
-                    ddate: this.date
+                    ddate: this.date,
+                    ddes: this.des,
+                    asn: this.aname,
+                    mail: this.email
                 });
             }else{
                 
-                this.tasks[this.editedTask].name=this.date,
-                this.tasks[this.editedTask].name=this.task;
+                this.tasks[this.editedTask].name=this.task
+                this.tasks[this.editedTask].ddate=this.date
+                this.tasks[this.editedTask].ddes=this.des
+                this.tasks[this.editedTask].asn=this.aname
+                this.tasks[this.editedTask].mail=this.email
                 
                 this.editedTask = null;
             }
 
             this.task = '';
             this.date = '';
+            this.email = '';
+            this.aname = '';
+            this.des = '';
 
         },
 
@@ -457,6 +589,9 @@ export default {
         editTask(index){
             this.task = this.tasks[index].name
             this.date = this.tasks[index].ddate
+            this.des = this.tasks[index].ddes
+            this.aname = this.tasks[index].asn
+            this.email = this.tasks[index].mail
             this.editedTask = index;
         },
 

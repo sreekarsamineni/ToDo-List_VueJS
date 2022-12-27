@@ -34,7 +34,6 @@ export default {
   box-sizing: border-box;
 }
 
-
 .add-task {
     margin-top: 20px;
     height: 40px;
