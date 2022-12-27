@@ -129,7 +129,7 @@
           </v-btn>
           <div @click="dialog = false">
             
-            
+            <div color="primary" @click="snackbarSubmit = true">
           <v-btn
           :disabled="!valid"
             text
@@ -139,6 +139,7 @@
             Save
             
           </v-btn>
+        </div>
         
         </div>
         </v-card-actions>
@@ -224,9 +225,11 @@
                                 </div>
                             </td>
                             <td>
+                              <div color="primary" @click="snackbarDelete = true">
                                 <div class="text-center" @click="deleteTask(index)">
                                     <span class="fa fa-trash"></span>
                                 </div>
+                              </div>
                             </td>
                             </tr>
                             <td>{{ task.ddes }}</td>
@@ -339,7 +342,9 @@
             text
             @click="submitTask1"
           >
+          <div color="primary" @click="snackbar = true">
             Save
+          </div>
           </v-btn>
           </div>
         </v-card-actions>
@@ -437,6 +442,76 @@
     </v-dialog>
   </v-row>
 
+  <!-- <div class="albox d-flex ">
+      <v-col sm="6">
+        <v-alert border="top" color="green" dismissible dark v-model="alert">
+          Dismissable alert
+        </v-alert>
+      </v-col>
+    </div> -->
+
+    <!-- <div class="albox">
+    <v-alert
+      v-model="alert"
+      border="start"
+      variant="tonal"
+      closable
+      close-label="Close Alert"
+      color="deep-purple-accent-4"
+      
+    >
+    Succefully Updated
+
+    </v-alert>
+
+    <div
+      v-if="!alert"
+      class="text-center"
+    >
+    
+    </div>
+  </div> -->
+
+  <v-snackbar
+  class="snk"
+      v-model="snackbar"
+      :timeout="timeout"
+      absolute
+      bottom
+      color="primary"
+      left
+      text
+    >
+      Successfully Updated
+    </v-snackbar>
+
+    <v-snackbar
+  class="snk"
+      v-model="snackbarDelete"
+      :timeout="timeout"
+      absolute
+      bottom
+      color="primary"
+      left
+      text
+    >
+      Successfully Deleted
+    </v-snackbar>
+
+    <v-snackbar
+  class="snk"
+      v-model="snackbarSubmit"
+      :timeout="timeout"
+      absolute
+      bottom
+      color="primary"
+      left
+      text
+    >
+      Successfully Added
+    </v-snackbar>
+
+    
 
 </template>
 
@@ -451,9 +526,14 @@ export default {
 
     data() {
         return {
+          // alert: false,
+          snackbar: false,
+          snackbarDelete: false,
+          snackbarSubmit: false,
+          timeout: 2000,
             
 
-            //dialog boxs
+            //dialog boxes
             dialog: false,
             dialog1: false,
             dialog2: false,
@@ -582,6 +662,7 @@ export default {
                 this.tasks[this.editedTask].mail=this.email
                 
                 this.editedTask = null;
+                // alert("Edited");
             }
 
             this.task = '';
@@ -621,6 +702,22 @@ export default {
 </script>
 
 <style>
+
+.snk {
+  /* margin-top: -700px; */
+  margin-top: -620px;
+  margin-left: 80%;
+}
+
+
+.albox {
+  margin-bottom: 20px;
+  margin-top: -700px;
+  width: 20%;
+  margin-left: 80%;
+  
+
+}
 
 .finished {
     text-decoration: line-through;
