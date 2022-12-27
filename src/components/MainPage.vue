@@ -28,7 +28,7 @@
 
      <!-- Create Dialog Box             -->
                 <v-row justify="center">
-                  <v-form>
+                  
     <v-dialog
       v-model="dialog"
       persistent
@@ -48,12 +48,19 @@
         </v-btn>
       </template>
       <v-card>
+        <v-form
+              ref="form"
+              v-model="valid"
+              lazy-validation
+            >
+        
         <v-card-title>
           <span class="text-h5">Create Task</span>
         </v-card-title>
         <v-card-text>
           <v-container>
             <v-row>
+                        
               <v-col
                 cols="12"
                 
@@ -74,10 +81,6 @@
                   required
                 ></v-text-field>
               </v-col>
-
-              
-              
-              
               <v-col
                 cols="12"
                 sm="6"
@@ -111,7 +114,6 @@
                   required
                 ></v-text-field>
               </v-col>
-              
             </v-row>
           </v-container>
           <small>*indicates required field</small>
@@ -126,22 +128,24 @@
             Close
           </v-btn>
           <div @click="dialog = false">
-            <div @click="validate">
+            
             
           <v-btn
-          
+          :disabled="!valid"
             text
             color="blue darken-1"
             @click="submitTask"
           >
             Save
+            
           </v-btn>
-         </div>
+        
         </div>
         </v-card-actions>
+      </v-form>
       </v-card>
     </v-dialog>
-  </v-form>
+          
   </v-row>
 
             </div>
@@ -248,6 +252,11 @@
     >
       
       <v-card>
+        <v-form
+              ref="form"
+              v-model="valid"
+              lazy-validation
+            >
         <v-card-title>
           <span class="text-h5">Edit Task</span>
         </v-card-title>
@@ -325,6 +334,7 @@
           </v-btn>
           <div @click="dialog1 = false">
           <v-btn
+          :disabled="!valid"
             color="blue darken-1"
             text
             @click="submitTask1"
@@ -333,6 +343,7 @@
           </v-btn>
           </div>
         </v-card-actions>
+        </v-form>
       </v-card>
     </v-dialog>
   </v-row>
@@ -442,10 +453,13 @@ export default {
         return {
             
 
-            //dialog box
+            //dialog boxs
             dialog: false,
             dialog1: false,
             dialog2: false,
+            //validation button
+            valid: true,
+            valid: true,
 
             // Form Validations
                 task: '',
@@ -510,28 +524,22 @@ export default {
                     ddate: '12/11/2022',
                     ddes: 'Yooooo',
                     asn: 'Teja',
-                    mail: 'Teja@gmail.com'
+                    mail: 'teja@gmail.com'
                 }
             ]
         }
     },
 
     methods: {
-      async validate (v) {
-        const { valid } = await this.$refs.dialog.validate()
-
-        if (valid) alert('Form is valid')
-      },
+      
         submitTask(){
             
-          
+          this.$refs.form.validate()
             console.log(this.task)
           
             if(this.task.length === 0) return
             if(this.date.length === 0) return;
            
-        
-            
                 this.tasks.push({
                     name: this.task,
                     status: 'to-do',
@@ -550,6 +558,8 @@ export default {
         },
 
         submitTask1(){
+
+          this.$refs.form.validate()
             console.log(this.task)
             if(this.task.length === 0) return;
             if(this.date.length === 0) return;
