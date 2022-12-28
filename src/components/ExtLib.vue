@@ -1,1 +1,0 @@
-<script type="text/javascript" src="<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.45/vue.cjs.min.js"></script>"></script>

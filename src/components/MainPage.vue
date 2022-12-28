@@ -23,146 +23,140 @@
       
             <div class="add-task">
                 <input type="text" placeholder="Add New Task" class="task-input">
-                <!-- <input @click="submitTask" type="" value="" class="submit-task" title="Add Task"> -->
+                
 
 
      <!-- Create Dialog Box             -->
                 <v-row justify="center">
                   
-    <v-dialog
-      v-model="dialog"
-      persistent
-      max-width="600px"
-    >
-  
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-         class="btt"
-          color="primary"
-          dark
-          v-bind="attrs"
-          v-on="on"
-          @click="dialog = true"
-        >
-          Add Task
-        </v-btn>
-      </template>
-      <v-card>
-        <v-form
-              ref="form"
-              v-model="valid"
-              lazy-validation
-            >
-        
-        <v-card-title>
-          <span class="text-h5">Create Task</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-                        
-              <v-col
-                cols="12"
+                  <v-dialog
+                    v-model="dialog"
+                    persistent
+                    max-width="600px"
+                  >
                 
-              >
-                <v-text-field
-                  v-model="task"
-                  :rules="nameRules"
-                  label="Title*"
-                  required
-                ></v-text-field>
-              </v-col>
-              
-              <v-col cols="12">
-                <v-text-field
-                v-model="des"
-                  :rules="desRules"
-                  label="Description*"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="6"
-              >
-                <v-text-field
-                v-model="aname"
-                  :rules="anameRules"
-                  label="Assignee name*"
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="6"
-              >
-                <v-text-field
-                v-model="date"
-                  :rules="dateRules"
-                  label="Due date*"
-                  hint="Format: dd/mm/yyyy"
-                  required
-                ></v-text-field>
-              </v-col>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                      class="btt"
+                        color="primary"
+                        dark
+                        v-bind="attrs"
+                        v-on="on"
+                        @click="dialog = true"
+                      >
+                        Add Task
+                      </v-btn>
+                    </template>
+                    <v-card>
+                      <v-form
+                            ref="form"
+                            v-model="valid"
+                            lazy-validation
+                          >
+                      
+                      <v-card-title>
+                        <span class="text-h5">Create Task</span>
+                      </v-card-title>
+                      <v-card-text>
+                        <v-container>
+                          <v-row>
+                                      
+                            <v-col
+                              cols="12"
+                              
+                            >
+                              <v-text-field
+                                v-model="task"
+                                :rules="nameRules"
+                                label="Title*"
+                                required
+                              ></v-text-field>
+                            </v-col>
+                            
+                            <v-col cols="12">
+                              <v-text-field
+                              v-model="des"
+                                :rules="desRules"
+                                label="Description*"
+                                required
+                              ></v-text-field>
+                            </v-col>
+                            <v-col
+                              cols="12"
+                              sm="6"
+                              md="6"
+                            >
+                              <v-text-field
+                              v-model="aname"
+                                :rules="anameRules"
+                                label="Assignee name*"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col
+                              cols="12"
+                              sm="6"
+                              md="6"
+                            >
+                              <v-text-field
+                              v-model="date"
+                                :rules="dateRules"
+                                label="Due date*"
+                                hint="Format: dd/mm/yyyy"
+                                required
+                              ></v-text-field>
+                            </v-col>
 
-              <v-col cols="12">
-                <v-text-field
-                v-model="email"
-                  :rules="emailRules"
-                  label="Email*"
-                  required
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
-          <small>*indicates required field</small>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="dialog = false"
-          >
-            Close
-          </v-btn>
-          <div @click="dialog = false">
-            
-            <div color="primary" @click="snackbarSubmit = true">
-          <v-btn
-          :disabled="!valid"
-            text
-            color="blue darken-1"
-            @click="submitTask"
-          >
-            Save
-            
-          </v-btn>
-        </div>
-        
-        </div>
-        </v-card-actions>
-      </v-form>
-      </v-card>
-    </v-dialog>
+                            <v-col cols="12">
+                              <v-text-field
+                              v-model="email"
+                                :rules="emailRules"
+                                label="Email*"
+                                required
+                              ></v-text-field>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                        <small>*indicates required field</small>
+                      </v-card-text>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn
+                          color="blue darken-1"
+                          text
+                          @click="dialog = false"
+                        >
+                        <div @click=" closeBtn">
+                          Close
+                          </div>
+                        </v-btn>
+                        <div @click="dialog = false">
+                          
+                          <div color="primary" @click="snackbarSubmit = true">
+                        <v-btn
+                        :disabled="!valid"
+                          text
+                          color="blue darken-1"
+                          @click="submitTask"
+                        >
+                          Save
+                          
+                        </v-btn>
+                      </div>
+                      
+                      </div>
+                      </v-card-actions>
+                    </v-form>
+                    </v-card>
+                  </v-dialog>
           
-  </v-row>
+                 </v-row>
 
             </div>
 
             </v-card>
 
-      <!-- <v-card-text>Hello</v-card-text> -->
-
-      
-
 
     <!-- Inner Card 2 -->
-
-    <!-- <v-row> <v-col 
-        md="6"> -->
-        
         
             <v-card
             class="box3 my-12" 
@@ -173,19 +167,6 @@
             
 
             <v-card-title>Task List</v-card-title>
-
-            <!-- <ul class="task-list">
-                <li class="task-list-item">
-                  <label class="task-list-item-label">
-                    <input type="checkbox">
-                    <span>Task</span>
-                  </label>
-                  <span class="delete-btn" title="Delete Task"></span>
-                </li>
-             </ul> -->
-
-
-             
              <v-table
              class="table"
     
@@ -244,272 +225,248 @@
 
     
         </v-col>
-   </v-row>
-</v-container>
-<!-- dialog -->
-<v-row justify="center">
-    <v-dialog
-      v-model="dialog1"
-      persistent
-      max-width="600px"
-    >
-      
-      <v-card>
-        <v-form
-              ref="form"
-              v-model="valid"
-              lazy-validation
-            >
-        <v-card-title>
-          <span class="text-h5">Edit Task</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col
-                cols="12"
+        </v-row>
+      </v-container>
+      <!-- dialog -->
+      <v-row justify="center">
+          <v-dialog
+            v-model="dialog1"
+            persistent
+            max-width="600px"
+          >
+            
+            <v-card>
+              <v-form
+                    ref="form"
+                    v-model="valid"
+                    lazy-validation
+                  >
+              <v-card-title>
+                <span class="text-h5">Edit Task</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col
+                      cols="12"
+                      
+                    >
+                      <v-text-field
+                        v-model="task"
+                        :rules="nameRules"
+                        label="Title*"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                      v-model="des"
+                        :rules="desRules"
+                        label="Description*"
+                        required>
+                      </v-text-field>
+                    </v-col>
                 
-              >
-                <v-text-field
-                  v-model="task"
-                  :rules="nameRules"
-                  label="Title*"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                v-model="des"
-                  :rules="desRules"
-                  label="Description*"
-                  required>
-                </v-text-field>
-              </v-col>
-           
-              
-              
-              <v-col
-                cols="12"
-                sm="6"
-                md="6"
-              >
-                <v-text-field
-                v-model="aname"
-                  :rules="anameRules"
-                  label="Assignee name*"
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="6"
-              >
-                <v-text-field
-                v-model="date"
-                  :rules="dateRules"
-                  label="Due date*"
-                  hint="Format: dd/mm/yyyy"
-                  required
-                ></v-text-field>
-              </v-col>
+                    
+                    
+                    <v-col
+                      cols="12"
+                      sm="6"
+                      md="6"
+                    >
+                      <v-text-field
+                      v-model="aname"
+                        :rules="anameRules"
+                        label="Assignee name*"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      sm="6"
+                      md="6"
+                    >
+                      <v-text-field
+                      v-model="date"
+                        :rules="dateRules"
+                        label="Due date*"
+                        hint="Format: dd/mm/yyyy"
+                        required
+                      ></v-text-field>
+                    </v-col>
 
-              <v-col cols="12">
-                <v-text-field
-                v-model="email"
-                  :rules="emailRules"
-                  label="Email*"
-                  required
-                ></v-text-field>
-              </v-col>
-              
-            </v-row>
-          </v-container>
-          <small>*indicates required field</small>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <!-- <v-btn
-            color="blue darken-1"
-            text
-            @click="dialog1 = false"
-          >
-            Close
-          </v-btn> -->
-          <div @click="dialog1 = false">
-          <v-btn
-          :disabled="!valid"
-            color="blue darken-1"
-            text
-            @click="submitTask1"
-          >
-          <div color="primary" @click="snackbar = true">
-            Save
-          </div>
-          </v-btn>
-          </div>
-        </v-card-actions>
-        </v-form>
-      </v-card>
-    </v-dialog>
-  </v-row>
+                    <v-col cols="12">
+                      <v-text-field
+                      v-model="email"
+                        :rules="emailRules"
+                        label="Email*"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    
+                  </v-row>
+                </v-container>
+                <small>*indicates required field</small>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                
+                <v-btn
+                  color="blue darken-1"
+                  text
+                  @click="dialog1 = false"
+                >
+                <div @click=" closeBtn">
+                  Close
+                  </div>
+                </v-btn>
+
+                <div @click="dialog1 = false">
+                <v-btn
+                :disabled="!valid"
+                  color="blue darken-1"
+                  text
+                  @click="submitTask1"
+                >
+                <div color="primary" @click="snackbar = true">
+                  Save
+                </div>
+                </v-btn>
+                </div>
+              </v-card-actions>
+              </v-form>
+            </v-card>
+          </v-dialog>
+        </v-row>
 
 
   <!-- On-click dialogBox with info -->
-  <v-row justify="center">
-    <v-dialog
-      v-model="dialog2"
-      persistent
-      max-width="600px"
-    >
-      
-      <v-card>
-        <v-card-title>
-          <span class="text-h5">Task Details</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col
-                cols="12"
-                
-              >
-                <v-text-field
-                  v-model="task"
-                  :rules="nameRules"
-                  label="Title*"
-                  readonly
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                v-model="des"
-                  :rules="desRules"
-                  label="Description*"
-                  readonly>
-                </v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="6"
-              >
-                <v-text-field
-                v-model="aname"
-                  :rules="anameRules"
-                  label="Assignee name*"
-                  readonly
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="6"
-              >
-                <v-text-field
-                v-model="date"
-                  :rules="dateRules"
-                  label="Due date*"
-                  hint="Format: dd/mm/yyyy"
-                  readonly
-                ></v-text-field>
-              </v-col>
-
-              <v-col cols="12">
-                <v-text-field
-                v-model="email"
-                  :rules="emailRules"
-                  label="Email*"
-                  readonly
-                ></v-text-field>
-              </v-col>
-              
-            </v-row>
-          </v-container>
-          
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="dialog2 = false"
+        <v-row justify="center">
+          <v-dialog
+            v-model="dialog2"
+            persistent
+            max-width="600px"
           >
-            Close
-          </v-btn>
-             
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-row>
+            
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">Task Details</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col
+                      cols="12"
+                      
+                    >
+                      <v-text-field
+                        v-model="task"
+                        :rules="nameRules"
+                        label="Title*"
+                        readonly
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                      v-model="des"
+                        :rules="desRules"
+                        label="Description*"
+                        readonly>
+                      </v-text-field>
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      sm="6"
+                      md="6"
+                    >
+                      <v-text-field
+                      v-model="aname"
+                        :rules="anameRules"
+                        label="Assignee name*"
+                        readonly
+                      ></v-text-field>
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      sm="6"
+                      md="6"
+                    >
+                      <v-text-field
+                      v-model="date"
+                        :rules="dateRules"
+                        label="Due date*"
+                        hint="Format: dd/mm/yyyy"
+                        readonly
+                      ></v-text-field>
+                    </v-col>
 
-  <!-- <div class="albox d-flex ">
-      <v-col sm="6">
-        <v-alert border="top" color="green" dismissible dark v-model="alert">
-          Dismissable alert
-        </v-alert>
-      </v-col>
-    </div> -->
+                    <v-col cols="12">
+                      <v-text-field
+                      v-model="email"
+                        :rules="emailRules"
+                        label="Email*"
+                        readonly
+                      ></v-text-field>
+                    </v-col>
+                    
+                  </v-row>
+                </v-container>
+                
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="blue darken-1"
+                  text
+                  @click="dialog2 = false"
+                >
+                <div @click=" closeBtn">
+                  Close
+                  </div>
+                </v-btn>
+                  
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-row>
 
-    <!-- <div class="albox">
-    <v-alert
-      v-model="alert"
-      border="start"
-      variant="tonal"
-      closable
-      close-label="Close Alert"
-      color="deep-purple-accent-4"
-      
-    >
-    Updated Succefully 
+          <v-snackbar
+          class="snk"
+              v-model="snackbar"
+              :timeout="timeout"
+              absolute
+              bottom
+              color="primary"
+              left
+              text
+            >
+              Successfully Updated
+            </v-snackbar>
 
-    </v-alert>
+            <v-snackbar
+          class="snk"
+              v-model="snackbarDelete"
+              :timeout="timeout"
+              absolute
+              bottom
+              color="primary"
+              left
+              text
+            >
+              Successfully Deleted
+            </v-snackbar>
 
-    <div
-      v-if="!alert"
-      class="text-center"
-    >
-    
-    </div>
-  </div> -->
-
-  <v-snackbar
-  class="snk"
-      v-model="snackbar"
-      :timeout="timeout"
-      absolute
-      bottom
-      color="primary"
-      left
-      text
-    >
-      Successfully Updated
-    </v-snackbar>
-
-    <v-snackbar
-  class="snk"
-      v-model="snackbarDelete"
-      :timeout="timeout"
-      absolute
-      bottom
-      color="primary"
-      left
-      text
-    >
-      Successfully Deleted
-    </v-snackbar>
-
-    <v-snackbar
-  class="snk"
-      v-model="snackbarSubmit"
-      :timeout="timeout"
-      absolute
-      bottom
-      color="primary"
-      left
-      text
-    >
-      Successfully Added
-    </v-snackbar>
+            <v-snackbar
+          class="snk"
+              v-model="snackbarSubmit"
+              :timeout="timeout"
+              absolute
+              bottom
+              color="primary"
+              left
+              text
+            >
+              Successfully Added
+            </v-snackbar>
 
     
 
@@ -565,12 +522,6 @@ export default {
                 v => !!v || 'E-mail is required',
                 v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
             ],
-
-            // sum: '',
-            // sumRules: [
-            //     v => !!v || 'Summary is required',
-            //     // v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-            // ],
 
             des: '',
             desRules: [
@@ -662,10 +613,20 @@ export default {
                 this.tasks[this.editedTask].mail=this.email
                 
                 this.editedTask = null;
-                // alert("Edited");
+                
             }
 
             this.task = '';
+            this.date = '';
+            this.email = '';
+            this.aname = '';
+            this.des = '';
+
+        },
+
+        closeBtn(){
+
+          this.task = '';
             this.date = '';
             this.email = '';
             this.aname = '';
@@ -746,10 +707,6 @@ export default {
     
 }
 
-/* .box2 {
-    margin-left: 0%;
-    margin-right: 20px;
-} */
 
 .box3 {
     margin-left: 20px;
@@ -786,24 +743,6 @@ body {
     
   }
 
-  .submit-task {
-    width: 32px;
-    height: 32px;
-    flex-shrink: 0;
-    border: none;
-    background: var(--add-button);
-    color: #272727;
-    background-image: url(add.png);
-    background-size: 75px;
-    background-position: center;
-    background-repeat: no-repeat;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 0 12px 0 var(--add-button-shadow);
-    margin-top: 10px;
-    margin-right: 5px;
-  }
-
   .task-input {
     width: 100%;
     padding: 0 5px;
@@ -821,71 +760,7 @@ body {
     color: #2e3136;
   }
 
-  .task-list-item {
-    background-color: rgba(255, 255, 255, 0.7);
-    display: flex;
-    align-items: center;
-    padding: 8px;
-    border-radius: 35px;
-    margin-bottom: 12px;
-    margin-right: 20px;
-    margin-left: 10px;
-  }
+  
 
-  .task-list-item input {
-    width: 16px;
-    height: 16px;
-    border: 1px solid #272727;
-    border-radius: 50%;
-    background-image: url(circle.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 0;
-    transition: 0.2s;
-    margin-right: 8px;
-    flex-shrink: 0;
-    margin-top: 4px;
-    appearance: none;
-  }
-
-  .task-list-item input:hover {
-    border-color: var(--checkbox-color);
-    box-shadow: 0 0 0 3px var(--checkbox-shadow);
-  }
-
-  .task-list-item input:checked {
-    background-size: 10px;
-    border: 1px solid var(--checkbox-color);
-    background-color: var(--checkbox-color);
-  }
-
-  .task-list-item input:checked + span {
-    color: #272727;
-    text-decoration: line-through #272727;
-  }
-
-  .task-list-item-label {
-    display: flex;
-    align-items: flex-start;
-    color: #272727;
-    margin-right: 8px;
-    font-size: 14px;
-    line-height: 24px;
-    position: relative;
-    transform: 0.2s;
-    cursor: pointer;
-  }
-
-  .delete-btn {
-    margin-left: auto;
-    margin-right: 5px;
-    display: block;
-    width: 16px;
-    height: 16px;
-    background-image: url(trash.png);
-    background-repeat: no-repeat;
-    background-size: 16px;
-    background-position: center;
-    cursor: pointer;
-  }
+ 
 </style>
