@@ -759,8 +759,5 @@ body {
   .task-input::placeholder {
     color: #2e3136;
   }
-
-  
-
  
 </style>
