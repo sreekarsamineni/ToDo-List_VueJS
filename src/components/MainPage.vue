@@ -566,10 +566,10 @@ export default {
         submitTask(){
             
           this.$refs.form.validate()
-            console.log(this.task)
+            // console.log(this.task)
           
-            if(this.task.length === 0) return
-            if(this.date.length === 0) return;
+            // if(this.task.length === 0) return
+            // if(this.date.length === 0) return;
            
                 this.tasks.push({
                     name: this.task,
