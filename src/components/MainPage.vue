@@ -129,21 +129,22 @@
                           Close
                           </div>
                         </v-btn>
-                        <div @click="dialog = false">
+                        <!-- <div @click="dialog = false"> -->
                           
-                          <div color="primary" @click="snackbarSubmit = true">
+                          <!-- <div color="primary" @click="snackbarSubmit = true"> -->
                         <v-btn
                         :disabled="!valid"
                           text
                           color="blue darken-1"
                           @click="submitTask"
+                          :loading="loading"
                         >
                           Save
                           
                         </v-btn>
-                      </div>
+                      <!-- </div> -->
                       
-                      </div>
+                      <!-- </div> -->
                       </v-card-actions>
                     </v-form>
                     </v-card>
@@ -460,7 +461,7 @@
               v-model="snackbarSubmit"
               :timeout="timeout"
               absolute
-              bottom
+              top
               color="primary"
               left
               text
@@ -474,6 +475,7 @@
 
 <script>
 // import CreatePop from './components/CreatePop.vue'
+import { db } from './FirebaseDB'
 
 export default {
 //     name: 'MainPage',
@@ -488,6 +490,8 @@ export default {
           snackbarDelete: false,
           snackbarSubmit: false,
           timeout: 2000,
+
+          loading: false,
             
 
             //dialog boxes
@@ -541,30 +545,65 @@ export default {
             
             //TaskList
             tasks: [
-                {
-                   name: 'Steal bananas from the store.',
-                   status: 'to-do',
-                   ddate: '12/12/2022',
-                   ddes: 'Hello',
-                   asn: 'Sreekar',
-                   mail: 'sr619@gmail.com'
-                },
-                {
-                    name: 'Eat 1kg chocolate in 1 hour.',
-                    status: 'in-progress',
-                    ddate: '12/11/2022',
-                    ddes: 'Yooooo',
-                    asn: 'Teja',
-                    mail: 'teja@gmail.com'
-                }
-            ]
+                // {
+                //    name: 'Steal bananas from the store.',
+                //    status: 'to-do',
+                //    ddate: '12/12/2022',
+                //    ddes: 'Hello',
+                //    asn: 'Sreekar',
+                //    mail: 'sr619@gmail.com'
+                // },
+                // {
+                //     name: 'Eat 1kg chocolate in 1 hour.',
+                //     status: 'in-progress',
+                //     ddate: '12/11/2022',
+                //     ddes: 'Yooooo',
+                //     asn: 'Teja',
+                //     mail: 'teja@gmail.com'
+                // }
+            ],
+
+
+            
+
         }
     },
 
+
+
     methods: {
+
+      saveTask(){
+        
+      },
       
         submitTask(){
             
+          // db.collection('tasks').add(this.tasks).then(() =>{
+          //   this.closeBtn();
+          //   this.push({ name: 'list'})
+          // })
+
+          this.loading = true;
+
+          const project = {
+            name: this.task,
+            status: 'to-do',
+            ddate: this.date,
+            ddes: this.des,
+            asn: this.aname,
+            mail: this.email
+          }
+
+          db.collection('formdata').add(project).then(() =>{
+            this.closeBtn();
+            this.loading = false
+            this.dialog = false
+            this.snackbarSubmit = true
+            console.log('added to DataBase')
+          })
+
+
           this.$refs.form.validate()
             // console.log(this.task)
           
@@ -580,11 +619,11 @@ export default {
                     mail: this.email
                 });
 
-            this.task = '';
-            this.date = '';
-            this.email = '';
-            this.aname = '';
-            this.des = '';
+            // this.task = '';
+            // this.date = '';
+            // this.email = '';
+            // this.aname = '';
+            // this.des = '';
             
         },
 
@@ -655,7 +694,24 @@ export default {
 
         firstCharUpper(str){
             return str.charAt(0).toUpperCase() + str.slice(1);
+        },
+        
+
+        created() {
+          db.collection('formdata').onSnapshot(res => {
+            const changes = res.docChanges();
+
+            changes.forEach(change => {
+              if (change.type === 'added'){
+                this.tasks.push({
+                  ...change.doc.data(),
+                  id: change.doc.id
+                })
+              }
+            })
+          })
         }
+
     }
 
 
