@@ -183,22 +183,22 @@
             </tr>
             </thead>
             <tbody>
-                            <tr v-for="(task, index) in tasks" :key="index">
+                             <tr v-for="(task, index) in getdataObj" :key="index">
                             <th>
                               <div @click="dialog2 = true">
                                 <div @click="editTask(index)">
                                 <span :class="{'finished': task.status === 'finished'}">
-                                  {{ task.name }}
+                                  {{ task.data().name }}
                                 </span>
                               </div>
                               </div>
                             </th>
                             <td style="width: 120px">
                                 <span @click="changeStatus(index)" class="pointer">
-                                  {{ firstCharUpper(task.status) }}
+                                  {{ (task.data().status) }}
                                 </span>
                             </td>
-                            <td>{{ task.ddate }}</td>
+                            <td>{{ task.data().ddate }}</td>
                             <td>
                                 <div class="text-center" @click="editTask(index)">
                                     <div @click="dialog1 = true">
@@ -207,11 +207,11 @@
                                 </div>
                             </td>
                             <td>
-                              <div color="primary" @click="snackbarDelete = true">
-                                <div class="text-center" @click="deleteTask(index)">
-                                    <span class="fa fa-trash"></span>
+                              <!-- <div color="primary" @click="snackbarDelete = true"> -->
+                                <div class="text-center" @click="deleteTask(task.id)">
+                                    <span class="fa fa-trash" ></span>
                                 </div>
-                              </div>
+                              <!-- </div> -->
                             </td>
                             </tr>
                             <td>{{ task.ddes }}</td>
@@ -477,7 +477,7 @@
 // import CreatePop from './components/CreatePop.vue'
 import { onMounted } from 'vue'
 import { db } from './FirebaseDB'
-import { collection, getDocs } from "firebase/firestore"
+import { collection, doc, getDocs } from "firebase/firestore"
 
 onMounted(async () => {
   const querySnapshot = await getDocs(collection(db, "formdata"))
@@ -578,6 +578,10 @@ export default {
                 //     mail: 'teja@gmail.com'
                 // }
             ],
+
+            getdataObj: [
+
+            ]
         }
     },
 
@@ -590,37 +594,61 @@ export default {
 
     methods: {
 
-      async addDAta() {
+      addDAta() {
 
-        const querySnapshot = await getDocs(collection(db, 'formdata'))
-      let fbTodos = []
-        querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data())
-          const project = {
-                    name: doc.data().task,
-                    status: doc.data().status,
-                    ddate: doc.data().date,
-                    ddes: doc.data().des,
-                    asn: doc.data().aname,
-                    mail: doc.data().email
-          }
-          fbTodos.push(project)
-        })
-        // tasks.value = fbTodos
-        this.tasks= project
-        console.log(this.tasks)
-        console.log(project)
+        // db.collection('formdata').get().then((res)=>{
+        //         console.log(res)
+        //         res.forEach(element => {
+        //            console.log(element.data()) 
+        //            this.getdataObj.push(element.data())
+        //         });
+        //         console.log(this.getdataObj)
+        //     })
+
+            db.collection("formdata").get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+        
+        this.getdataObj.push(doc);
+    });
+});
+
+
+      //   const querySnapshot = await getDocs(collection(db, 'formdata'))
+      // let fbTodos = []
+      //   querySnapshot.forEach((doc) => {
+          
+      //     console.log(doc.id, " => ", doc.data())
+      //     const project = {
+      //               name: doc.data().task,
+      //               status: doc.data().status,
+      //               ddate: doc.data().date,
+      //               ddes: doc.data().des,
+      //               asn: doc.data().aname,
+      //               mail: doc.data().email
+      //     }
+      //     fbTodos.push(project)
+      //   })
+      //   // tasks.value = fbTodos
+      //   this.tasks= project
+      //   console.log(this.tasks)
+      //   console.log(project)
+
+      ///////////////////////////
+
+    //   onSnapshot(db.collection('formdata'),(querySnapshot) => {
+    //     var getdataObj = [];
+    //     querySnapshot.forEach((doc) => {
+    //         res.forEach(element => {
+    //                console.log(element.data()) 
+    //                this.getdataObj.push(element.data())
+    //             });
+    //     });
+    // });
         
 
       },
       
        submitTask(){
-            
-          // db.collection('tasks').add(this.tasks).then(() =>{
-          //   this.closeBtn();
-          //   this.push({ name: 'list'})
-          // })
 
           this.loading = true;
 
@@ -634,12 +662,16 @@ export default {
           }
 
 
-          db.collection('formdata').add(tasks).then(() =>{
+          db.collection('formdata').add(tasks).then((docRef) =>{
             this.closeBtn();
             this.loading = false
             this.dialog = false
             this.snackbarSubmit = true
             console.log('added to DataBase')
+            console.log("Doc ID:", docRef.id);
+          })
+          .catch(function(error){
+            console.error("Error adding ", error);
           })
 
 
@@ -714,11 +746,13 @@ export default {
 
         },
 
-        deleteTask(index){
-            this.tasks.splice(index, 1)
+        deleteTask(doc){
+            // this.tasks.splice(index, 1)
+            db.collection('formdata').doc(doc).delete().then(() => {
+              this.snackbarDelete = true
+            })
 
-
-            console.log(index)
+            // console.log(doc)
 
         },
 
@@ -737,9 +771,9 @@ export default {
             this.tasks[index].status = this.statuses[newIndex];
         },
 
-        firstCharUpper(str){
-            return str.charAt(0).toUpperCase() + str.slice(1);
-        },
+        // firstCharUpper(str){
+        //     return str.charAt(0).toUpperCase() + str.slice(1);
+        // },
 
 
         async created(){
