@@ -475,13 +475,29 @@
 
 <script>
 // import CreatePop from './components/CreatePop.vue'
+import { onMounted } from 'vue'
 import { db } from './FirebaseDB'
+import { collection, getDocs } from "firebase/firestore"
+
+onMounted(async () => {
+  const querySnapshot = await getDocs(collection(db, "formdata"))
+querySnapshot.forEach((doc) => {
+  // doc.data() is never undefined for query doc snapshots
+  console.log(doc.id, " => ", doc.data());
+});
+            })
+            
+
 
 export default {
 //     name: 'MainPage',
 //   components: {
 //     CreatePop
 //   },
+
+   setup() {
+    
+   },
 
     data() {
         return {
@@ -562,22 +578,44 @@ export default {
                 //     mail: 'teja@gmail.com'
                 // }
             ],
-
-
-            
-
         }
     },
+
+
+   mounted() {
+      this.addDAta()
+      },
 
 
 
     methods: {
 
-      saveTask(){
+      async addDAta() {
+
+        const querySnapshot = await getDocs(collection(db, 'formdata'))
+      let fbTodos = []
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data())
+          const project = {
+                    name: doc.data().task,
+                    status: doc.data().status,
+                    ddate: doc.data().date,
+                    ddes: doc.data().des,
+                    asn: doc.data().aname,
+                    mail: doc.data().email
+          }
+          fbTodos.push(project)
+        })
+        // tasks.value = fbTodos
+        this.tasks= project
+        console.log(this.tasks)
+        console.log(project)
         
+
       },
       
-        submitTask(){
+       submitTask(){
             
           // db.collection('tasks').add(this.tasks).then(() =>{
           //   this.closeBtn();
@@ -586,7 +624,7 @@ export default {
 
           this.loading = true;
 
-          const project = {
+          const tasks = {
             name: this.task,
             status: 'to-do',
             ddate: this.date,
@@ -595,7 +633,8 @@ export default {
             mail: this.email
           }
 
-          db.collection('formdata').add(project).then(() =>{
+
+          db.collection('formdata').add(tasks).then(() =>{
             this.closeBtn();
             this.loading = false
             this.dialog = false
@@ -624,13 +663,15 @@ export default {
             // this.email = '';
             // this.aname = '';
             // this.des = '';
+            console.log(tasks)
+            
             
         },
 
         submitTask1(){
 
           this.$refs.form.validate()
-            console.log(this.task)
+            // console.log(this.task)
             if(this.task.length === 0) return;
             if(this.date.length === 0) return;
            
@@ -674,7 +715,11 @@ export default {
         },
 
         deleteTask(index){
-            this.tasks.splice(index, 1);
+            this.tasks.splice(index, 1)
+
+
+            console.log(index)
+
         },
 
         editTask(index){
@@ -695,27 +740,38 @@ export default {
         firstCharUpper(str){
             return str.charAt(0).toUpperCase() + str.slice(1);
         },
+
+
+        async created(){
+          const querySnapshot = await getDocs(collection(db, "formdata"));
+          querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            this.tasks.push(doc.data());
+          });
+        },
+
+        
         
 
-        created() {
-          db.collection('formdata').onSnapshot(res => {
-            const changes = res.docChanges();
+        // created() {
+        //   db.collection('formdata').onSnapshot(res => {
+        //     const changes = res.docChanges();
 
-            changes.forEach(change => {
-              if (change.type === 'added'){
-                this.tasks.push({
-                  ...change.doc.data(),
-                  id: change.doc.id
-                })
-              }
-            })
-          })
-        }
+        //     changes.forEach(change => {
+        //       if (change.type === 'added'){
+        //         this.tasks.push({
+        //           ...change.doc.data(),
+        //           id: change.doc.id
+        //         })
+        //       }
+        //     })
+        //   })
+        // }
 
-    }
-
-
+    },
+    
 }
+
 </script>
 
 <style>
