@@ -66,7 +66,7 @@
                               
                             >
                               <v-text-field
-                                v-model="task"
+                                v-model="task.name"
                                 :rules="nameRules"
                                 label="Title*"
                                 required
@@ -75,7 +75,7 @@
                             
                             <v-col cols="12">
                               <v-text-field
-                              v-model="des"
+                              v-model="task.des"
                                 :rules="desRules"
                                 label="Description*"
                                 required
@@ -83,32 +83,48 @@
                             </v-col>
                             <v-col
                               cols="12"
-                              sm="6"
-                              md="6"
+                              sm="12"
+                              md="12"
                             >
                               <v-text-field
-                              v-model="aname"
+                              v-model="task.aname"
                                 :rules="anameRules"
                                 label="Assignee name*"
                               ></v-text-field>
                             </v-col>
+          
                             <v-col
                               cols="12"
                               sm="6"
                               md="6"
                             >
                               <v-text-field
-                              v-model="date"
+                              v-model="task.date"
                                 :rules="dateRules"
                                 label="Due date*"
                                 hint="Format: dd/mm/yyyy"
                                 required
                               ></v-text-field>
+                            
+                            </v-col>
+
+
+                            <v-col
+                              cols="12"
+                              sm="6"
+                            >
+                              <v-select
+                              v-model="task.status"
+                              :items="items"
+                              :rules="selectRules"
+                              label="Status*"
+                              required
+                              ></v-select>
                             </v-col>
 
                             <v-col cols="12">
                               <v-text-field
-                              v-model="email"
+                              v-model="task.email"
                                 :rules="emailRules"
                                 label="Email*"
                                 required
@@ -168,6 +184,8 @@
             
 
             <v-card-title>Task List</v-card-title>
+
+     <!-- Task Table -->
              <v-table
              class="table"
     
@@ -186,21 +204,21 @@
                              <tr v-for="(task, index) in getdataObj" :key="index">
                             <th>
                               <div @click="dialog2 = true">
-                                <div @click="editTask(index)">
+                                <div @click="editData(task)">
                                 <span :class="{'finished': task.status === 'finished'}">
                                   {{ task.data().name }}
                                 </span>
                               </div>
                               </div>
                             </th>
-                            <td style="width: 120px">
-                                <span @click="changeStatus(index)" class="pointer">
-                                  {{ (task.data().status) }}
+                            <td>
+                                <span>
+                                  {{ firstCharUpper(task.data().status) }}
                                 </span>
                             </td>
-                            <td>{{ task.data().ddate }}</td>
+                            <td>{{ task.data().date }}</td>
                             <td>
-                                <div class="text-center" @click="editTask(index)">
+                                <div class="text-center" @click="editData(task)">
                                     <div @click="dialog1 = true">
                                     <span class="fa fa-pen"></span>
                                 </div>
@@ -214,21 +232,17 @@
                               <!-- </div> -->
                             </td>
                             </tr>
-                            <td>{{ task.ddes }}</td>
-                            <td>{{ task.asn }}</td>
-                            <td>{{ task.mail }}</td>
+                            <!-- <div>{{ task.des }}</div> -->
+                            <!-- <td>{{ task.asn }}</td> -->
+                            <!-- <td>{{ task.mail }}</td> -->
                         </tbody>
-        </v-table>
-
+               </v-table>
             </v-card>
-    
-    </v-card>
-
-    
+        </v-card>
         </v-col>
         </v-row>
       </v-container>
-      <!-- dialog -->
+      <!-- Edit dialog box -->
       <v-row justify="center">
           <v-dialog
             v-model="dialog1"
@@ -250,10 +264,9 @@
                   <v-row>
                     <v-col
                       cols="12"
-                      
                     >
                       <v-text-field
-                        v-model="task"
+                        v-model="task.name"
                         :rules="nameRules"
                         label="Title*"
                         required
@@ -261,22 +274,19 @@
                     </v-col>
                     <v-col cols="12">
                       <v-text-field
-                      v-model="des"
+                      v-model="task.des"
                         :rules="desRules"
                         label="Description*"
                         required>
                       </v-text-field>
                     </v-col>
-                
-                    
-                    
                     <v-col
                       cols="12"
-                      sm="6"
-                      md="6"
+                      sm="12"
+                      md="12"
                     >
                       <v-text-field
-                      v-model="aname"
+                      v-model="task.aname"
                         :rules="anameRules"
                         label="Assignee name*"
                       ></v-text-field>
@@ -287,17 +297,28 @@
                       md="6"
                     >
                       <v-text-field
-                      v-model="date"
+                      v-model="task.date"
                         :rules="dateRules"
                         label="Due date*"
                         hint="Format: dd/mm/yyyy"
                         required
                       ></v-text-field>
                     </v-col>
-
+                    <v-col
+                      cols="12"
+                      sm="6"
+                    >
+                      <v-select
+                      v-model="task.status"
+                      :items="items"
+                      :rules="selectRules"
+                      label="Status*"
+                      required
+                      ></v-select>
+                    </v-col>
                     <v-col cols="12">
                       <v-text-field
-                      v-model="email"
+                      v-model="task.email"
                         :rules="emailRules"
                         label="Email*"
                         required
@@ -316,29 +337,29 @@
                   text
                   @click="dialog1 = false"
                 >
-                <div @click=" closeBtn">
+                <div @click="closeBtn">
                   Close
                   </div>
                 </v-btn>
 
-                <div @click="dialog1 = false">
+                <!-- <div @click="dialog1 = false"> -->
                 <v-btn
                 :disabled="!valid"
                   color="blue darken-1"
                   text
                   @click="submitTask1"
+                  :loading="loading"
                 >
-                <div color="primary" @click="snackbar = true">
+                <!-- <div color="primary" @click="snackbar = true"> -->
                   Save
-                </div>
+                <!-- </div> -->
                 </v-btn>
-                </div>
+                <!-- </div> -->
               </v-card-actions>
               </v-form>
             </v-card>
           </v-dialog>
         </v-row>
-
 
   <!-- On-click dialogBox with info -->
         <v-row justify="center">
@@ -357,10 +378,9 @@
                   <v-row>
                     <v-col
                       cols="12"
-                      
                     >
                       <v-text-field
-                        v-model="task"
+                        v-model="task.name"
                         :rules="nameRules"
                         label="Title*"
                         readonly
@@ -368,7 +388,7 @@
                     </v-col>
                     <v-col cols="12">
                       <v-text-field
-                      v-model="des"
+                      v-model="task.des"
                         :rules="desRules"
                         label="Description*"
                         readonly>
@@ -376,11 +396,11 @@
                     </v-col>
                     <v-col
                       cols="12"
-                      sm="6"
-                      md="6"
+                      sm="12"
+                      md="12"
                     >
                       <v-text-field
-                      v-model="aname"
+                      v-model="task.aname"
                         :rules="anameRules"
                         label="Assignee name*"
                         readonly
@@ -392,17 +412,28 @@
                       md="6"
                     >
                       <v-text-field
-                      v-model="date"
+                      v-model="task.date"
                         :rules="dateRules"
                         label="Due date*"
                         hint="Format: dd/mm/yyyy"
                         readonly
                       ></v-text-field>
                     </v-col>
-
+                    <v-col
+                      cols="12"
+                      sm="6"
+                    >
+                      <v-select
+                      v-model="task.status"
+                      :items="items"
+                      :rules="selectRules"
+                      label="Status*"
+                      readonly
+                      ></v-select>
+                    </v-col>
                     <v-col cols="12">
                       <v-text-field
-                      v-model="email"
+                      v-model="task.email"
                         :rules="emailRules"
                         label="Email*"
                         readonly
@@ -420,7 +451,7 @@
                   text
                   @click="dialog2 = false"
                 >
-                <div @click=" closeBtn">
+                <div @click="closeBtn">
                   Close
                   </div>
                 </v-btn>
@@ -474,19 +505,7 @@
 </template>
 
 <script>
-// import CreatePop from './components/CreatePop.vue'
-import { onMounted } from 'vue'
 import { db } from './FirebaseDB'
-import { collection, doc, getDocs } from "firebase/firestore"
-
-onMounted(async () => {
-  const querySnapshot = await getDocs(collection(db, "formdata"))
-querySnapshot.forEach((doc) => {
-  // doc.data() is never undefined for query doc snapshots
-  console.log(doc.id, " => ", doc.data());
-});
-            })
-            
 
 
 export default {
@@ -495,31 +514,27 @@ export default {
 //     CreatePop
 //   },
 
-   setup() {
-    
-   },
-
     data() {
         return {
-          // alert: false,
+
           snackbar: false,
           snackbarDelete: false,
           snackbarSubmit: false,
           timeout: 2000,
 
           loading: false,
-            
-
+ 
             //dialog boxes
             dialog: false,
             dialog1: false,
             dialog2: false,
+
             //validation button
             valid: true,
             valid: true,
 
             // Form Validations
-                task: '',
+                name: '',
             nameRules: [
                 v => !!v || 'Title is required',
                 v => (v && v.length <= 30) || 'Title must be less than 30 characters',
@@ -537,6 +552,14 @@ export default {
                 v => /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/.test(v) || 'Date must be in the Format dd/mm/yyyy',
             ],
 
+            selectRules: [v => !!v || 'Item is required'],
+            status: '',
+            items: [
+                'To-do',
+                'In-progress',
+                'Completed',
+            ],
+
             email: '',
             emailRules: [
                 v => !!v || 'E-mail is required',
@@ -550,13 +573,13 @@ export default {
             ],
 
 
-            task: '',
+            name: '',
             date: '',
             aname: '',
             email: '',
             des: '',
             editedTask: null,
-            statuses: ["to-do", "in-progress", "finished"],
+            // statuses: ["to-do", "in-progress", "finished"],
 
             
             //TaskList
@@ -581,17 +604,27 @@ export default {
 
             getdataObj: [
 
-            ]
+            ],
+
+            task: {
+
+            name: '',
+            status: '',
+            date: '',
+            aname: '',
+            email: '',
+            des: '',
+            },
+
+            editID: null
         }
     },
-
 
    mounted() {
       this.addDAta()
       },
 
-
-
+     
     methods: {
 
       addDAta() {
@@ -612,57 +645,13 @@ export default {
     });
 });
 
-
-      //   const querySnapshot = await getDocs(collection(db, 'formdata'))
-      // let fbTodos = []
-      //   querySnapshot.forEach((doc) => {
-          
-      //     console.log(doc.id, " => ", doc.data())
-      //     const project = {
-      //               name: doc.data().task,
-      //               status: doc.data().status,
-      //               ddate: doc.data().date,
-      //               ddes: doc.data().des,
-      //               asn: doc.data().aname,
-      //               mail: doc.data().email
-      //     }
-      //     fbTodos.push(project)
-      //   })
-      //   // tasks.value = fbTodos
-      //   this.tasks= project
-      //   console.log(this.tasks)
-      //   console.log(project)
-
-      ///////////////////////////
-
-    //   onSnapshot(db.collection('formdata'),(querySnapshot) => {
-    //     var getdataObj = [];
-    //     querySnapshot.forEach((doc) => {
-    //         res.forEach(element => {
-    //                console.log(element.data()) 
-    //                this.getdataObj.push(element.data())
-    //             });
-    //     });
-    // });
-        
-
       },
       
        submitTask(){
 
           this.loading = true;
 
-          const tasks = {
-            name: this.task,
-            status: 'to-do',
-            ddate: this.date,
-            ddes: this.des,
-            asn: this.aname,
-            mail: this.email
-          }
-
-
-          db.collection('formdata').add(tasks).then((docRef) =>{
+          db.collection('formdata').add(this.task).then((docRef) =>{
             this.closeBtn();
             this.loading = false
             this.dialog = false
@@ -676,74 +665,44 @@ export default {
 
 
           this.$refs.form.validate()
-            // console.log(this.task)
-          
-            // if(this.task.length === 0) return
-            // if(this.date.length === 0) return;
-           
-                this.tasks.push({
-                    name: this.task,
-                    status: 'to-do',
-                    ddate: this.date,
-                    ddes: this.des,
-                    asn: this.aname,
-                    mail: this.email
-                });
 
-            // this.task = '';
-            // this.date = '';
-            // this.email = '';
-            // this.aname = '';
-            // this.des = '';
-            console.log(tasks)
-            
-            
         },
+
 
         submitTask1(){
 
+          this.loading = true;
+
+          db.collection("formdata").doc(this.editID).update(this.task)
+          .then(() => {
+            this.closeBtn();
+            this.loading = false
+            this.snackbar = true
+            this.dialog1 = false
+              console.log("Document successfully updated!");
+          })
+          .catch((error) => {
+              // The document probably doesn't exist.
+              console.error("Error updating document: ", error);
+          });
+
           this.$refs.form.validate()
-            // console.log(this.task)
-            if(this.task.length === 0) return;
-            if(this.date.length === 0) return;
-           
-            if(this.editedTask === null){
-                this.tasks.push({
-                    name: this.task,
-                    status: 'to-do',
-                    ddate: this.date,
-                    ddes: this.des,
-                    asn: this.aname,
-                    mail: this.email
-                });
-            }else{
-                
-                this.tasks[this.editedTask].name=this.task
-                this.tasks[this.editedTask].ddate=this.date
-                this.tasks[this.editedTask].ddes=this.des
-                this.tasks[this.editedTask].asn=this.aname
-                this.tasks[this.editedTask].mail=this.email
-                
-                this.editedTask = null;
-                
-            }
-
-            this.task = '';
-            this.date = '';
-            this.email = '';
-            this.aname = '';
-            this.des = '';
-
-        },
+        },        
 
         closeBtn(){
 
-          this.task = '';
-            this.date = '';
-            this.email = '';
-            this.aname = '';
-            this.des = '';
+           this.task.name = ''
+           this.task.status = ''
+            this.task.date = ''
+            this.task.email = ''
+            this.task.aname = ''
+            this.task.des = ''
+        },
 
+        editData(task){
+
+          this.task = task.data();
+          this.editID = task.id;
         },
 
         deleteTask(doc){
@@ -753,54 +712,11 @@ export default {
             })
 
             // console.log(doc)
-
         },
 
-        editTask(index){
-            this.task = this.tasks[index].name
-            this.date = this.tasks[index].ddate
-            this.des = this.tasks[index].ddes
-            this.aname = this.tasks[index].asn
-            this.email = this.tasks[index].mail
-            this.editedTask = index;
+        firstCharUpper(str){
+            return str.charAt(0).toUpperCase() + str.slice(1);
         },
-
-        changeStatus(index) {
-            let newIndex = this.statuses.indexOf(this.tasks[index].status);
-            if (++newIndex > 2) newIndex = 0;
-            this.tasks[index].status = this.statuses[newIndex];
-        },
-
-        // firstCharUpper(str){
-        //     return str.charAt(0).toUpperCase() + str.slice(1);
-        // },
-
-
-        async created(){
-          const querySnapshot = await getDocs(collection(db, "formdata"));
-          querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            this.tasks.push(doc.data());
-          });
-        },
-
-        
-        
-
-        // created() {
-        //   db.collection('formdata').onSnapshot(res => {
-        //     const changes = res.docChanges();
-
-        //     changes.forEach(change => {
-        //       if (change.type === 'added'){
-        //         this.tasks.push({
-        //           ...change.doc.data(),
-        //           id: change.doc.id
-        //         })
-        //       }
-        //     })
-        //   })
-        // }
 
     },
     
