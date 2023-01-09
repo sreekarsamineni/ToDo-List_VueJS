@@ -2,11 +2,11 @@
   
   <h1>Login</h1>
 
-  <input type="email" placeholder="" v-model="email"> <Br />
-  <input type="password" placeholder="" v-model="password"> <Br />
-  <button @click="login">Login</button>
+  <v-text-field type="email" placeholder="Email" v-model="email"> </v-text-field>
+  <v-text-field type="password" placeholder="password" v-model="password"></v-text-field>
+  <v-btn @click="login">Login</v-btn>
 
-  <p>Need an account? <router-link to="/signup"></router-link></p>
+  <p>Need an account? <router-link to="/signup">signup</router-link></p>
 
 </template>
 

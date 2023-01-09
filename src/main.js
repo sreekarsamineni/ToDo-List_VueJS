@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
-// import App from './App.vue'
+import App from './App.vue'
 // import MainPage from './components/MainPage.vue'
-import SignUp from './components/authentication/SignUp.vue'
+// import SignUp from './components/authentication/SignUp.vue'
 // import HomePage from './components/layouts/HomePage.vue'
 // import NavBar from './components/NavBar.vue'
 import vuetify from './plugins/vuetify'
@@ -15,7 +15,7 @@ loadFonts()
 
 
 
-createApp(SignUp)
+createApp(App)
   .use(vuetify).use(router)
   .mount('#app')
   

@@ -2,9 +2,9 @@
   
   <h1>Login</h1>
 
-  <input type="email" placeholder="" v-model="email"> <Br />
-  <input type="password" placeholder="" v-model="password"> <Br />
-  <button @click="login">Sign Up</button>
+  <v-text-field type="email" placeholder="email" v-model="email"> </v-text-field>
+  <v-text-field type="password" placeholder="password" v-model="password"> </v-text-field>
+  <v-btn @click="login">Sign Up</v-btn>
 
 
 

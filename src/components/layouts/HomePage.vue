@@ -3,7 +3,7 @@
 
  
 <!-- <router-link to="/SignUp" >Hello</router-link> -->
-<router-view></router-view>
+
    
   <div class="text text-center text-balck mt-30 ">
       <h1 class="text-h4 font-weight-thin mt-10 mb-4">
