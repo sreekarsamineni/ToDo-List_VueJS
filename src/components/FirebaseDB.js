@@ -1,6 +1,7 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 // import auth from "firebase/compat/app";
+import 'firebase/compat/auth';
 
 
 // import 'firebase/firestore'
@@ -26,8 +27,10 @@ firebase.initializeApp(firebaseConfig);
 
 // export const auth = firebase.auth();
 
+// export const auth = getAuth(app);
+export const auth = firebase.auth();
+
 export const db = firebase.firestore();
 
 db.settings({ timestampInSnapshots: true });
-
 

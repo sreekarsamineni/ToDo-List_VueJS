@@ -15,11 +15,13 @@
             <v-btn flat color="grey">
                 <span>Github</span>
             </v-btn>
+            <router-link to = '/signup'>
             <v-btn flat color="grey">
                 <span>Sign in</span>
                 <span right class="fa fa-right-to-bracket"> </span>
                 <!-- <v-icon right>exit_to_app</v-icon> -->
             </v-btn>
+        </router-link>
         </v-toolbar>
     </nav>
 

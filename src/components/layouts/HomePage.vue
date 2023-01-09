@@ -1,5 +1,5 @@
 <template>
-    <HomeNavbar></HomeNavbar>
+    <!-- <HomeNavbar></HomeNavbar> -->
 
  
 <!-- <router-link to="/SignUp" >Hello</router-link> -->
@@ -12,12 +12,13 @@
       <h4 class="subheading">
         Build your application today!
       </h4>
-      <!-- <router-link to = '/signup'> -->
+      <router-link to = '/signup'>
       <v-btn class="mt-7">
         Create an account
       </v-btn>
-    <!-- </router-link> -->
+    </router-link>
     </div>
+    <router-view></router-view>
 </template>
 
 <script>
