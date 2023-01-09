@@ -1,5 +1,7 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
+// import auth from "firebase/compat/app";
+
 
 // import 'firebase/firestore'
 // TODO: Add SDKs for Firebase products that you want to use
@@ -22,7 +24,7 @@ const firebaseConfig = {
 // const analytics = getAnalytics(app);
 firebase.initializeApp(firebaseConfig);
 
-
+// export const auth = firebase.auth();
 
 export const db = firebase.firestore();
 db.settings({ timestampInSnapshots: true });
