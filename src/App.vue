@@ -1,13 +1,13 @@
 <template>
 
-<nav color="transparent">
+<nav class="black">
         <v-toolbar flat app class="tex-uppercase grey--text">
             <v-toolbar-title>
                 <span class="font-weight-light">Todo</span>
                 <span>List</span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
-            <router-link to="/home">
+            <router-link style="text-decoration: none; color: inherit" to="/home">
             <v-btn flat color="grey">
                 <span>Home</span>
             </v-btn>
@@ -18,20 +18,22 @@
             <v-btn flat color="grey">
                 <span>Github</span>
             </v-btn>
-            <router-link to="/signup">
+            <router-link style="text-decoration: none; color: inherit" to="/signup">
             <v-btn flat color="grey">
                 <span>Register</span>
             </v-btn>
           </router-link>
-            <router-link to = '/login'>
+            <router-link style="text-decoration: none; color: inherit" to = '/login'>
             <v-btn flat color="grey">
                 <span>Sign in</span>
                 <span right class="fa fa-right-to-bracket"> </span>
-                <!-- <v-icon right>exit_to_app</v-icon> -->
+               <v-icon right>exit_to_app</v-icon>
             </v-btn>
         </router-link>
         </v-toolbar>
-    </nav>
+
+        
+    </nav> 
 
   <router-view></router-view>
 </template>
@@ -40,8 +42,14 @@
 
 
 export default {
-  name: 'app'
+  name: 'app',
+
+  data() {
+    return {
+    
+  }
   
+  }
 }
 </script>
 
@@ -51,12 +59,9 @@ export default {
   box-sizing: border-box;
 }
 
-.add-task {
-    margin-top: 20px;
-    height: 40px;
-    font-size: 14px;
-    display: flex;
-  }
+
+
+
 
   
 

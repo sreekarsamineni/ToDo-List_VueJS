@@ -11,16 +11,15 @@
     <v-container>
     <v-row>
         <v-col>
-            
+            <!-- color="rgba(255, 255, 255, 0.3)" -->
     <v-card
     class="card1 mx "
-    max-width="45%"
-    
+    width="50%"
     
   >
 
     <v-card-title>
-      <span class="text-h5">Log In</span>
+      <span class="text-h5">LOG IN</span>
     </v-card-title>
   
   <v-col
@@ -37,9 +36,17 @@
     <v-text-field type="password" placeholder="password" v-model="password"></v-text-field></v-col>
 
     <div class="lbtn">
-    <v-btn @click="login" width="40%" >Login</v-btn>
+    <v-btn 
+    @click="login" 
+    width="35%" 
+    :loading="loading" 
+    text
+    color="rgba(22, 49, 113, 0.5)" 
+    style="color: white;">
+    Login
+    </v-btn>
     
-    <p>Create an account? <router-link to="/signup">signup</router-link></p>
+    <p>Don't have an account? <router-link style="text-decoration: none; color: mediumpurple;" to="/signup">Register</router-link></p>
 </div>
 
   </v-card>
@@ -49,6 +56,18 @@
     </v-row>
 </v-container>
 
+<v-snackbar
+          
+              v-model="snackbarlin"
+              :timeout="timeout"
+              absolute
+              bottom
+              color="primary"
+              left
+              text
+            >
+              Successfully Logged In
+            </v-snackbar>
   
   </template>
   
@@ -62,20 +81,30 @@
       data() {
           return {
           email: "",
-          password: ""
+          password: "",
+
+          loading: false,
+          snackbarlin: false,
+          timeout: 1000,
           
          }
       },
   
       methods: {
           login: function() {
+            this.loading = true;
               firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
                   user => {
-                    alert('Successfully Loggin in');
+                    alert('Successfully Logged in');
                       console.log(user.data);
+                      this.$router.push('/todo');
+                      this.loading = false;
+                      this.snackbarlin = true;
                   },
-                  err =>
+                  err =>{
                   alert(err)
+                  this.loading = false;
+                }
               )
   
           }
@@ -87,12 +116,13 @@
   <style>
 
   .card1 {
-    justify-content: center;
-    margin-left: 30%;
+    /* justify-content: center; */
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 10%;
   }
   
   .lbtn {
-    margin-left: 37%;
+    text-align: center;
   }
   </style>

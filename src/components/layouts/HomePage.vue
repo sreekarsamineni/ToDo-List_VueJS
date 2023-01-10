@@ -12,7 +12,7 @@
       <h4 class="subheading">
         Build your application today!
       </h4>
-      <router-link to = '/signup'>
+      <router-link style="text-decoration: none; color: inherit" to = '/signup'>
       <v-btn class="mt-7">
         Create an account
       </v-btn>
