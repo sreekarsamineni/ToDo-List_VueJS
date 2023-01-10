@@ -4,7 +4,8 @@
 
   <v-text-field type="email" placeholder="Email" v-model="email"> </v-text-field>
   <v-text-field type="password" placeholder="Password" v-model="password"> </v-text-field>
-  <v-btn v-on:click="login">Sign Up</v-btn>
+  <v-btn @click="signup">Sign Up</v-btn>
+  <p>Already have an account? <router-link to="/login">login</router-link></p>
 
 
 
@@ -26,17 +27,29 @@ export default {
     },
 
     methods: {
-      login: function(e) {
-        firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
-        .then((user) => {
+      signup() {
+        firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
+        (user) => {
           alert('Account Created for ${user.email}');
-          this.$route.push('/');
+          console.log(user)
         },
-        err => {
-          alert(err.message);
-        })
-        // e.preventdefault();
+        (err) => {
+          alert(err)
+        }
+        )
+        }
       }
+      // signup: function(e) {
+      //   firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+      //   .then((user) => {
+      //     alert('Account Created for ${user.email}');
+      //     this.$route.push('/');
+      //   },
+      //   err => {
+      //     alert(err.message);
+      //   })
+      //   // e.preventdefault();
+      // }
     }
 
     // methods: {
@@ -52,7 +65,7 @@ export default {
     //     }
     // }
 
-}
+
 </script>
 
 <style>

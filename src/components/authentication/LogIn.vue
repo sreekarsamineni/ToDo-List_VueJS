@@ -13,14 +13,14 @@
         <v-col>
             
     <v-card
-    class="mx "
-    max-width="344"
-    justify-center
+    class="card1 mx "
+    max-width="45%"
+    
     
   >
 
     <v-card-title>
-      <span class="text-h5">LogIn</span>
+      <span class="text-h5">Log In</span>
     </v-card-title>
   
   <v-col
@@ -36,11 +36,11 @@
     >
     <v-text-field type="password" placeholder="password" v-model="password"></v-text-field></v-col>
 
-    <div class="justify-center">
-    <v-btn @click="login" >Login</v-btn>
-    </div>
-    <p>Need an account? <router-link to="/signup">signup</router-link></p>
+    <div class="lbtn">
+    <v-btn @click="login" width="40%" >Login</v-btn>
     
+    <p>Create an account? <router-link to="/signup">signup</router-link></p>
+</div>
 
   </v-card>
 
@@ -71,6 +71,7 @@
           login: function() {
               firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
                   user => {
+                    alert('Successfully Loggin in');
                       console.log(user.data);
                   },
                   err =>
@@ -84,5 +85,14 @@
   </script>
   
   <style>
+
+  .card1 {
+    justify-content: center;
+    margin-left: 30%;
+    margin-top: 10%;
+  }
   
+  .lbtn {
+    margin-left: 37%;
+  }
   </style>
