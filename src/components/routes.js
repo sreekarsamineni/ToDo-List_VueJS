@@ -21,7 +21,8 @@ const routes=[
         name: 'login',
         path: '/login',
         component:LogIn
-    }
+    },
+    
 ]
 
 const router = createRouter({

@@ -12,7 +12,8 @@
 
 <script>
 import firebase from "firebase/compat/app"
-require('firebase/auth')
+require('firebase/compat/auth')
+import '../FirebaseDB'
 
 export default {
     name: "SignUp",
