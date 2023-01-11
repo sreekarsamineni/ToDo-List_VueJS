@@ -1,5 +1,6 @@
 <template>
-  
+ 
+ <LoginNavbar></LoginNavbar>
 
 <v-container class="con">
    <v-row>
@@ -507,13 +508,13 @@
 
 <script>
 import { db } from './FirebaseDB'
-
+import LoginNavbar from './navbars/LoginNavbar'
 
 export default {
-//     name: 'MainPage',
-//   components: {
-//     CreatePop
-//   },
+    name: 'MainPage',
+  components: {
+    LoginNavbar
+  },
 
     data() {
         return {

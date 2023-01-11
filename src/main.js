@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 // import MainPage from './components/MainPage.vue'
-// import SignUp from './components/authentication/SignUp.vue'
+// import LogIn from './components/authentication/LogIn.vue'
 // import HomePage from './components/layouts/HomePage.vue'
 // import NavBar from './components/NavBar.vue'
 import vuetify from './plugins/vuetify'

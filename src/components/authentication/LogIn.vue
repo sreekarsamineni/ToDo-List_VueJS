@@ -1,5 +1,8 @@
 <template>
   
+
+  <HomeNavbar></HomeNavbar>
+
     <!-- <h1>Login</h1>
   
     <v-text-field type="email" placeholder="Email" v-model="email"> </v-text-field>
@@ -75,9 +78,14 @@
   import firebase from "firebase/compat/app"
   require('firebase/compat/auth')
   import '../FirebaseDB'
+  import HomeNavbar from '../navbars/HomeNavbar'
   
   export default {
       name: "LogIn",
+      components: {
+    HomeNavbar
+  },
+  
       data() {
           return {
           email: "",

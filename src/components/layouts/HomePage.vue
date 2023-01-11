@@ -1,5 +1,5 @@
 <template>
-    <!-- <HomeNavbar></HomeNavbar> -->
+    <HomeNavbar></HomeNavbar>
 
  
 <!-- <router-link to="/SignUp" >Hello</router-link> -->
