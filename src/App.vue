@@ -28,7 +28,7 @@ export default {
       let user = localStorage.getItem('user-info');
       if(!user)
       {
-        this.$router.push({path: '/home' })
+        this.$router.push({path: '/' })
       }
     }
 

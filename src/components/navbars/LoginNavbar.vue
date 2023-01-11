@@ -17,7 +17,7 @@
             <v-btn flat color="grey">
                 <span>Github</span>
             </v-btn>
-          <router-link style="text-decoration: none; color: inherit" to = '/home'>
+          <router-link style="text-decoration: none; color: inherit" to = '/'>
             <v-btn flat color="grey">
                 <span>Sign out</span>
                 <span right class="fa fa-right-to-bracket"> </span>

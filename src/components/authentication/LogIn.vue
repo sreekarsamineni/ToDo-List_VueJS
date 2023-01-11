@@ -1,7 +1,7 @@
 <template>
   
 
-  <HomeNavbar></HomeNavbar>
+  <!-- <HomeNavbar></HomeNavbar> -->
 
     <!-- <h1>Login</h1>
   
@@ -85,7 +85,7 @@
       components: {
     HomeNavbar
   },
-  
+
       data() {
           return {
           email: "",

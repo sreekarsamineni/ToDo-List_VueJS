@@ -12,7 +12,7 @@
             color="#ffffff4d"
             >
 
-            <v-card-title>To do List</v-card-title>
+            <v-card-title>Todo List</v-card-title>
 
 
   <!-- Inner card 1 -->

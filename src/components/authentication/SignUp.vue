@@ -1,6 +1,6 @@
 <template>
   
-  <HomeNavbar></HomeNavbar>
+  <!-- <HomeNavbar></HomeNavbar> -->
 
   <!-- <h1>Register</h1>
 
@@ -69,7 +69,7 @@ export default {
     components: {
     HomeNavbar
   },
-  
+
     data() {
         return {
         email: "",
