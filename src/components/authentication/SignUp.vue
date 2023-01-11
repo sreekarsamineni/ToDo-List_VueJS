@@ -46,7 +46,7 @@
     >
     Register</v-btn>
       </div>
-    <p>Already have an account? <router-link style="text-decoration: none; color: mediumpurple;" to="/login">login</router-link></p>
+    <p>Already have an account? <router-link style="text-decoration: none; color: mediumpurple;" to="/">login</router-link></p>
 </div>
 
   </v-card>
