@@ -2,7 +2,7 @@
 
 ## Project setup
 ```
-cd To-Do-List_VueJS
+cd ToDo-List_VueJS
 npm install
 npm run serve
 
